@@ -46,9 +46,9 @@ and AdaBoost. After testing these models on the test set using classification ac
 
 Using the bin accuracy rate to cross validate every model, Logistic performed the best, with an R^2 of about 0.9984. We expected Logistic to be very good, as it matches logically with baseball statistics and win probabilities. The Logistic bin accuracy graph is below. It graphs the bins against the percentage of games in that bin that actually won. An ideal graph would therefore follow along a straight diagonal line from (0,0) to (1,20). The graph below visualizes just how accurate our Logistic Regression model was.
 
-![png](CS109a_Final_Project_Writeup_files/logit.png){:height="30%" width="30%" .center-image}
+![png](CS109a_Final_Project_Writeup_files/logit.png){:height="30%" width="30%"}
 
-LDA and Random Forest also performed very well on the test set, with respective R^2 scores of about 0.9681 and 0.9971. Interestingly, K-NN performed almost perfectly with classification accuracy, but very poorly with bin accuracy which makes sense given the nature of k-NN. In the end we relied most heavily on the results from the Logistic Regression to answer our clutchness question, but also used LDA and Random Forest to check as they were also valuable models.
+AdaBoost and Random Forest also performed very well on the test set, with respective R^2 scores of about 0.9852 and 0.9971. Interestingly, K-NN performed almost perfectly with classification accuracy, but very poorly with bin accuracy which makes sense given the nature of k-NN. In the end we relied most heavily on the results from the Logistic Regression to answer our clutchness question, but also used others to check as they were also valuable models.
 
 
 
