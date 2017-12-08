@@ -5,9 +5,8 @@ title: Baseball Win Probability and Most Clutch Players
 CS109a Final Project
 By Sam Bieler, Max Benegas, Andrew Puopolo, and Kate Schember
 
-<p align="center">
-![png](CS109a_Final_Project_Writeup_files/Cover.png){:height="75%" width="75%"}
-</p>
+![png](CS109a_Final_Project_Writeup_files/Cover.png){:height="75%" width="75%"}{:style=centerme}
+
 
 
 ## Our Question
@@ -60,8 +59,8 @@ Our leverage index model proved very successful in the results. The most clutch 
 
 The most clutch pitchers were (in order from most clutch): Clayton Kershaw, Zack Greinke, Madison Bumgarner, Max Scherzer, Jon Lester, John Lackey, Adam Wainwright, Cole Hamels, Justin Verlander, Johnny Cueto, Chris Sale, Felix Hernandez, Jake Arrieta, Lance Lynn, Jake Peavy, Jacob deGrom, Jeff Samardzija, Jared Weaver, Corey Kluber, Stephen Strasburg, David Price, and Ervin Santana. 
 
-![png](CS109a_Final_Project_Writeup_files/Batters.png){:height="50%" width="50%"} 
-![png](CS109a_Final_Project_Writeup_files/Pitchers.png){:height="50%" width="50%"} 
+![png](CS109a_Final_Project_Writeup_files/Batters.png){:height="20%" width="20%"}
+![png](CS109a_Final_Project_Writeup_files/Pitchers.png){:height="20%" width="20%"} 
 
 Most of these names are the MLB stars of the past few seasons, confirming that our model is producing reasonable results. Because scraping took so long, we were only able to use data from 2006, 2007, and 2013-2017. Ideally, we would have been able to run this on all the plays for the past ten years. If given more time, we would also continue to adjust our LI model. While it seems to be giving good output now, it could still be far more complex to include more variables or weight the variables differently.
 
