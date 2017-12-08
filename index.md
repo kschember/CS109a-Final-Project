@@ -3,9 +3,10 @@ title: Baseball Win Probability and Most Clutch Players
 ---
 
 CS109a Final Project
+
 By Sam Bieler, Max Benegas, Andrew Puopolo, and Kate Schember
 
-![png](CS109a_Final_Project_Writeup_files/Cover.png){:height="75%" width="75%"}{:style=centerme}
+![png](CS109a_Final_Project_Writeup_files/Cover.png){:height="75%" width="75%"}
 
 
 
@@ -43,27 +44,48 @@ Our implementation of the win probably model required a few important decisions 
 For the WP model, we tried Random Forest, Logistic Regression, LDA, QDA, k-NN,
 and AdaBoost. After testing these models on the test set using classification accuracy rate as our performance metric, we realized this metric was not suitable for our goals. We don’t actually care much if our model correctly predicts the final outcome of a game, but rather the incremental win probabilities of every play in a game. Since our final question about clutchness is centered entirely upon play-by-play data, we needed a metric that would explain the success of each model by its mid-game win probabilities. In order to do this, we created a bin accuracy rate with 20 bins that marked success when a WP estimate was within one bin of the result. This way, each WP has to be relatively accurate throughout a game to produce a good R^2. 
 
-Using the bin accuracy rate to cross validate every model, Logistic performed the best, with an R^2 of about 0.97. We expected Logistic to be very good, as it matches logically with baseball statistics and win probabilities. LDA and Random Forest also performed very well on the test set. Interestingly, K-NN performed almost perfectly with classification accuracy, but very poorly with bin accuracy which makes sense given the nature of k-NN. In the end we relied most heavily on the results from the Logistic Regression to answer our clutchness question, but also used LDA and Random Forest to check as they were also valuable models.
+Using the bin accuracy rate to cross validate every model, Logistic performed the best, with an R^2 of about 0.9984. We expected Logistic to be very good, as it matches logically with baseball statistics and win probabilities. The Logistic bin accuracy graph is below. It graphs the bins against the percentage of games in that bin that actually won. An ideal graph would therefore follow along a straight diagonal line from (0,0) to (1,20). The graph below visualizes just how accurate our Logistic Regression model was.
+![png](CS109a_Final_Project_Writeup_files/logit.png){:height="20%" width="20%"} 
+
+LDA and Random Forest also performed very well on the test set, with respective R^2 scores of about 0.9681 and 0.9971. Interestingly, K-NN performed almost perfectly with classification accuracy, but very poorly with bin accuracy which makes sense given the nature of k-NN. In the end we relied most heavily on the results from the Logistic Regression to answer our clutchness question, but also used LDA and Random Forest to check as they were also valuable models.
 
 
 
 ## Addressing the Question of Players' Clutchness
-We wanted to address the question of whether or not certain players were “more clutch” than others, and therefore we had to determine which situations could be determined as “clutch.” To do this, we used a simplified version of Fangraphs’s (Tom Tango reference above) leverage index. We took every single instance of plays with a certain number of outs remaining in the game (top of the first has 54 outs left, 2 outs in the bottom of the 9th has 1) and run differentials from -10 to 10. In situations where the absolute run differential was more than 10, we simplified and assumed it was 10. Therefore, we had 54*21 different scenarios. From this, we calculated the average absolute win probability change of each of these 1134 states. This average absolute win probability for each of the states was our “leverage index.” To calculate the clutchness of each player, we multiplied the win probability added times the leverage of the play for every single plate appearance in order to give a “clutchness” score for each play. If a player was not clutch, they would have some data points that are massively negative due to underperformance in high leverage situations. We then summed this over all plays.
+We wanted to address the question of whether or not certain players were “more clutch” than others, and therefore we had to determine which situations could be determined as “clutch.” To do this, we used a simplified version of Fangraphs’s (Tom Tango reference above) leverage index. We took every single instance of plays with a certain number of outs remaining in the game (top of the first has 54 outs left, 2 outs in the bottom of the 9th has 1) and run differentials from -10 to 10. In situations where the absolute run differential was more than 10, we simplified and assumed it was 10. Therefore, we had 54*21 different scenarios. From this, we calculated the average absolute win probability change of each of these 1134 states. This average absolute win probability for each of the states was our “leverage index.” To calculate the clutchness of each player, we multiplied the win probability added times the leverage of the play for every single plate appearance in order to give a “clutchness” score for each play. If a player was not clutch, they would have some data points that are massively negative due to underperformance in high leverage situations. 
+
+We then calculated two versions of the clutchness of players. One was simply based on the sum of every player's clutchness score. The other was based on the mean of every player's clutchness score, and was limited to players with at least 500 plays in the data. We limited the data for the mean because we wanted to make sure no players would have a skewed score as a result of only appearing on plate a few times. By doing both models, we felt our results would avoid being skewed or otherwise biased. 
 
 
 
 ## Results and Conclusions
 Our central WP model was very successful. Based on both our bin accuracy R^2 score and our personal observations comparing the train estimates with what the original data said, all our predicted probabilities were quite accurate. Given more time, it would have been interesting to further explore what effect subset selection would have on our models. We decided that we had a reasonable number of predictors and none of them were strikingly unnecessary, so kept most of them. We also, as mentioned before, made the decision to remove the teams as predictors, which could potentially make a significant difference. Ideally, we would have been able to try a few different subsets we choose on our own and then check it with selections from a stepwise function or other subset selection model. 
 
-Our leverage index model proved very successful in the results. The most clutch batters we found were (in order from most clutch): Paul Goldschmidt, Giancarlo Stanton, Mike Trout, Joey Votto, Miguel Cabrera, David Ortiz, Magglio Ordonez, Barry Bonds, Chipper Jones, Jack Cust, Pat Burrell, Jim Thome, Vladimir Guerrero, Carlos Pena, Rhys Hoskins, Josh Donaldson, and Aaron Boone. 
+Our leverage index model proved very successful in the results. For the sum version of our clutchness scale, the most clutch batters we found were (in order from most clutch): Paul Goldschmidt, Giancarlo Stanton, Mike Trout, Joey Votto, Miguel Cabrera, David Ortiz, Magglio Ordonez, Barry Bonds, Chipper Jones, Jack Cust, Pat Burrell, Jim Thome, Vladimir Guerrero, Carlos Pena, Rhys Hoskins, Josh Donaldson, and Aaron Boone. 
 
 The most clutch pitchers were (in order from most clutch): Clayton Kershaw, Zack Greinke, Madison Bumgarner, Max Scherzer, Jon Lester, John Lackey, Adam Wainwright, Cole Hamels, Justin Verlander, Johnny Cueto, Chris Sale, Felix Hernandez, Jake Arrieta, Lance Lynn, Jake Peavy, Jacob deGrom, Jeff Samardzija, Jared Weaver, Corey Kluber, Stephen Strasburg, David Price, and Ervin Santana. 
 
 ![png](CS109a_Final_Project_Writeup_files/Batters.png){:height="20%" width="20%"}
 ![png](CS109a_Final_Project_Writeup_files/Pitchers.png){:height="20%" width="20%"} 
 
-Most of these names are the MLB stars of the past few seasons, confirming that our model is producing reasonable results. Because scraping took so long, we were only able to use data from 2006, 2007, and 2013-2017. Ideally, we would have been able to run this on all the plays for the past ten years. If given more time, we would also continue to adjust our LI model. While it seems to be giving good output now, it could still be far more complex to include more variables or weight the variables differently.
+For the mean version of our clutchness scale, the most clutch batters we found were (in order from most clutch): Barry Bonds, Jack Cust, Magglio Ordonez, Chipper Jones, Pat Burrell, Jim Thome, Giancarlo Stanton, Paul Goldschmidt, Mike Trout, Vladimir Guerrero, Joey Votto, David Ortiz, Miguel Cabrera, Carlos Pena, Frank Thomas, Carlos Guillen, Lance Berkman, Justin Bour, and Ken Griffey. 
+
+The most clutch pitchers were (in order from most clutch): Clayton Kershaw, Kenley Jansen, Madison Bumgarner, Zack Greinke, Orlando Hernandez, Koji Uehara, Parker Bridwell, Craig Kimbrel, Hyun-Jin Ryu, Jacob deGromm, Dellin Betances, Kyle Hendricks, Max Scherzer, Ryan Buchter, Derek Lowe, Jake Arrieta, Lance Lynn, Johnny Cueto, and Roger Clemens. 
+
+![png](CS109a_Final_Project_Writeup_files/Batters2.png){:height="20%" width="20%"}
+![png](CS109a_Final_Project_Writeup_files/Pitchers2.png){:height="20%" width="20%"} 
+
+Most of these names are the MLB stars of the past few seasons, confirming that our model is producing reasonable results. Both clutchness scales overlap on many players, suggesting that they are both pretty accurate but that there does indeed exist a significant difference in the average scores and summed scores. Because scraping took so long, we were only able to use data from 2006, 2007, and 2013-2017. Ideally, we would have been able to run this on all the plays for the past ten years. If given more time, we would also continue to adjust our LI model. While it seems to be giving good output now, it could still be far more complex to include more variables or weight the variables differently.
 
 Overall, however, this model successfully predicts win probability, uses that to measure the leverage index of situations, and finally is able to pick out which players perform best under high pressure conditions.
 
+
+![png](CS109a_Final_Project_Writeup_files/hist1.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/hist2.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/hist3.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/hist4.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/bar1.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/bar2.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/bar3.png){:height="40%" width="40%"} 
+![png](CS109a_Final_Project_Writeup_files/bar4.png){:height="40%" width="40%"} 
 
