@@ -1,7 +1,6 @@
 ---
-title: Baseball Analysis: Win Probability and the Most Clutch Players
+title: Baseball Win Probability and Most Clutch Players
 ---
- 
 
 ## Our Question
 In this project, we built a model to output the in-game win probability for Major League Baseball games based on situational data such as the score, inning, runners on base, details of the previous play, and other features. We built the model using play-by-play data from baseball-reference.com for every game from the last five years.
