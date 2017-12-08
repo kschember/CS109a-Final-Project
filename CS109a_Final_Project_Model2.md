@@ -1,7 +1,7 @@
 ---
-title: plt.show()
+title: Models
 notebook: CS109a_Final_Project_Model2.ipynb
-nav_include: 1
+nav_include: 2
 ---
 
 ## Contents
