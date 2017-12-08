@@ -91,3 +91,7 @@ Overall, however, this model successfully predicts win probability, uses that to
 ![png](CS109a_Final_Project_Writeup_files/bar3.png){:height="40%" width="40%"} 
 ![png](CS109a_Final_Project_Writeup_files/bar4.png){:height="40%" width="40%"} 
 
+.center {
+  text-align: center;
+}
+
